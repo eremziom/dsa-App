@@ -1,17 +1,39 @@
 <template>
   <div id="app">
-    <TopBar />
-    <h2>DSA-APP</h2>
+    <div class="container">
+      <div v-if="!isError">
+        <h2>DSA-APP</h2>
+        <div v-if="!isLogged && !loginView">
+          <Unloged />
+        </div>
+        <b-button v-if="!loginView" to="/login">ZALOGUJ</b-button>
+      </div>
+      <router-view @setLoginViewOn="setLoginViewOn"></router-view>
+    </div>
   </div>
 </template>
 
 <script>
-import TopBar from './components/TopBar'
+import Unloged from './components/Unloged';
+import { mapGetters } from 'vuex';
 
 export default {
   name: 'App',
   components: {
-    TopBar,
+    Unloged,
+  },
+  computed: {
+    ...mapGetters(['isLogged', 'isError']),
+  },
+  methods: {
+    setLoginViewOn(){
+      this.loginView = true;
+    },
+  },
+  data: function(){
+    return {
+      loginView: false,
+    }
   }
 }
 </script>

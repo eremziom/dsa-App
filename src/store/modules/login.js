@@ -1,24 +1,31 @@
 const state = {
     login: false,
+    user: 'Niezalogowany'
 };
 
 const getters = {
-    isLogged: state => state.token
+    isLogged: state => state.login,
+    isUser: state => state.user,
 };
 
 const mutations = {
     setLogin: (state, login) => {
-        state.token = login;
+        state.login = login;
+    },
+    setUser: (state, user) => {
+        state.user = user;
     }
 };
 
 const actions = {
-    logIn: ({commit}) => {
+    logIn: ({commit}, user) => {
         commit('setLogin', true);
+        commit('setUser', user)
+        console.log(user)
     },
     logOut: ({commit}) => {
         commit('setLogin', false);
-    }
+    },
 };
 
 export default {
